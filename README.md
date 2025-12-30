@@ -1,33 +1,37 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# Moji Emoji
 
-## Getting Started
+Moji Emoji は、選択した文字列から連想される絵文字を提案する Chrome 拡張機能です。
 
-First, run the development server:
+## 技術スタック
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
+- Node.js v24.12.0
+- pnpm v10.26.2
+- Plasmo v0.90.5
+- React v18.2.0
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+# 🚀 On-boarding
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+## 開発環境の構築と開発手順
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
+1. 以下をを実行し、依存パッケージをインストールします
+   ```
+   pnpm install
+   ```
 
-## Making production build
+2. 以下を実行し、開発サーバーを起動します
+   ```
+   pnpm dev
+   ```
 
-Run the following:
+3. すると `./build/chrome-mv3-dev/` ディレクトリが作成されます
+  
+4. chrome://extensions/ にアクセスし、デベロッパーモードを ON にして、「パッケージ化されていない拡張機能を読み込む」ボタンを押下し `./build/chrome-mv3-dev/` ディレクトリを選択します
 
-```bash
-pnpm build
-# or
-npm run build
-```
+5. ツールバーの拡張機能一覧の中に `DEV | Moji emoji` が確認できます
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
+## 参考
 
-## Submit to the webstores
+以下の記事を参考にして、開発しています。
 
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+- [**ブラウザ拡張機能を作るためのReactフレームワーク『Plasmo』** - Zenn](https://zenn.dev/nado1001/articles/plasmo-browser-extension)
+- [**Chrome Extensions** - chrome for developers](https://developer.chrome.com/docs/extensions?hl=ja)
