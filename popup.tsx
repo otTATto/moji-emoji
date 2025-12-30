@@ -1,25 +1,62 @@
-import { useState } from "react"
+import "./style.css"
+import githubIcon from "data-base64:~assets/github-mark.svg"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
-
   return (
-    <div
-      style={{
-        padding: 16
-      }}>
-      <h2>
-        Welcome to your{" "}
-        <a href="https://www.plasmo.com" target="_blank">
-          Plasmo
-        </a>{" "}
-        Extension!
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
-    </div>
+    <>
+      <div className="
+        w-[300px] 
+        bg-sky-50 px-5 py-3
+        flex flex-col gap-y-3
+      ">
+        <h1 className="
+          text-sky-500
+          text-2xl text-center
+          font-bold
+        ">
+          Moji Emoji
+        </h1>
+        <div className="
+          text-gray-700
+          text-sm
+          bg-white 
+          p-3 rounded-2xl
+        ">
+          選択した文字列から連想される絵文字を提案する拡張機能です。
+        </div>
+        <div className="
+          flex items-center justify-center gap-x-1
+          text-gray-500 text-xs font-bold 
+        ">
+          <div>
+            © <a
+            href="https://x.com/0123tato"
+            target="_blank"
+            className="
+              hover:text-sky-500 
+              duration-300 ease-in-out
+            ">
+              たと
+            </a>
+          </div>
+          <div>・</div>
+          <div>
+            <a
+              href="https://github.com/otTATto/moji-emoji"
+              target="_blank"
+            >
+              <img
+                src={githubIcon}
+                className="
+                  w-4 
+                  fill-gray-500 hover:fill-sky-500 
+                  duration-300 ease-in-out"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
