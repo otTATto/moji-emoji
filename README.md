@@ -1,11 +1,11 @@
-# Moji Emoji
+# MojiEmoji
 
 <img 
   src="./assets/logo.svg"
   style="width: 300px; display: block; margin: 0 auto; transform: translateX(-10%);"
 />
 
-Moji Emoji は、選択した文字列から連想される絵文字を提案する Chrome 拡張機能です。
+MojiEmoji は、選択した文字列から連想される絵文字を提案する Chrome 拡張機能です。
 
 ## 技術スタック
 
@@ -32,7 +32,7 @@ Moji Emoji は、選択した文字列から連想される絵文字を提案す
   
 4. chrome://extensions/ にアクセスし、デベロッパーモードを ON にして、「パッケージ化されていない拡張機能を読み込む」ボタンを押下し `./build/chrome-mv3-dev/` ディレクトリを選択します
 
-5. ツールバーの拡張機能一覧の中に `DEV | Moji emoji` が確認できます
+5. ツールバーの拡張機能一覧の中に `DEV | MojiEmoji` が確認できます
 
 ## 参考
 
