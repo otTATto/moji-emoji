@@ -26,8 +26,8 @@ const getSelectionPos = (): Pos | null => {
   if (!domRect || domRect.width === 0 && domRect.height === 0) return null;
 
   return {
-    x: domRect.left,
-    y: domRect.bottom
+    x: domRect.left + window.scrollX,
+    y: domRect.bottom + window.scrollY, 
   };
 }; 
 
