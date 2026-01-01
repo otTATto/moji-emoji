@@ -34,4 +34,5 @@ Moji Emoji は、選択した文字列から連想される絵文字を提案す
 以下の記事を参考にして、開発しています。
 
 - [**ブラウザ拡張機能を作るためのReactフレームワーク『Plasmo』** - Zenn](https://zenn.dev/nado1001/articles/plasmo-browser-extension)
+- [**Docs** - plasmo](https://docs.plasmo.com/)
 - [**Chrome Extensions** - chrome for developers](https://developer.chrome.com/docs/extensions?hl=ja)

@@ -1,6 +1,6 @@
 {
   "name": "moji-emoji",
-  "displayName": "Moji Emoji",
+  "displayName": "MojiEmoji",
   "version": "0.0.1",
   "description": "Suggests emojis related to the selected text.",
   "author": "tato",

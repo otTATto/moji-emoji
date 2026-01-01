@@ -1,7 +1,8 @@
-import "./style.css"
-import githubIcon from "data-base64:~assets/github-mark.svg"
+import "./style.css";
+import logoIcon from "data-base64:~assets/logo.svg";
+import githubIcon from "data-base64:~assets/github-mark.svg";
 
-function IndexPopup() {
+const IndexPopup = () => {
   return (
     <>
       <div className="
@@ -9,13 +10,10 @@ function IndexPopup() {
         bg-sky-50 px-5 py-3
         flex flex-col gap-y-3
       ">
-        <h1 className="
-          text-sky-500
-          text-2xl text-center
-          font-bold
-        ">
-          Moji Emoji
-        </h1>
+        <img 
+          src={logoIcon}
+          className="w-[200px] py-2 ml-6"
+        />
         <div className="
           text-gray-700
           text-sm
@@ -57,7 +55,7 @@ function IndexPopup() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default IndexPopup
+export default IndexPopup;
