@@ -1,5 +1,10 @@
 # Moji Emoji
 
+<img 
+  src="./assets/logo.svg"
+  style="width: 300px; display: block; margin: 0 auto; transform: translateX(-10%);"
+/>
+
 Moji Emoji は、選択した文字列から連想される絵文字を提案する Chrome 拡張機能です。
 
 ## 技術スタック
