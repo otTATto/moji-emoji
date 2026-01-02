@@ -2,7 +2,7 @@ import styleLocal from "data-text:./style.css"
 import logoIcon from "data-base64:~assets/logo.svg";
 import arrowDown from "data-base64:~assets/arrow-down.svg";
 import type { PlasmoGetStyle } from "plasmo"
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 
 // 座標
 type Pos = { x: number, y: number };
@@ -32,6 +32,7 @@ const getSelectionPos = (): Pos | null => {
 }; 
 
 const OverlayArea = () => {
+  const rootRef = useRef<HTMLDivElement | null>(null)
   const [open, setOpen] = useState(false);                  // OverlayArea を表示するかどうか
   const [pos, setPos] = useState<Pos | null>(null);         // OverlayArea の表示座標
   const [text, setText] = useState("");
@@ -95,10 +96,29 @@ const OverlayArea = () => {
     return () => window.removeEventListener("keydown", onKeyDown, true);
   }, []);
 
+  useEffect(() => {
+    // OverlayArea 以外をクリックで OverlayArea を非表示
+    const onDown = (ev: MouseEvent) => {
+      if (!open) return;
+
+      const root = rootRef.current;
+      if (!root) return;
+      
+      const path = ev.composedPath?.() ?? [];
+      const isClickedInside = path.includes(root);
+      if (!isClickedInside) setOpen(false);
+    }
+    document.addEventListener("mousedown", onDown, true);
+    return () => document.removeEventListener("mousedown", onDown, true);
+  }, [open])
+
   if (!open) return null;
 
   return (
-    <div style={style}>
+    <div 
+      ref={rootRef}
+      style={style}
+    >
       <div className="
         px-5 py-3
         bg-sky-50

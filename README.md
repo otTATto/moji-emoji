@@ -9,10 +9,11 @@ MojiEmoji は、選択した文字列から連想される絵文字を提案す�
 
 ## 技術スタック
 
-- Node.js v24.12.0
-- pnpm v10.26.2
-- Plasmo v0.90.5
-- React v18.2.0
+- Node.js: v24.12.0
+- pnpm: v10.26.2
+- Plasmo: v0.90.5
+- React: v18.2.0
+- Tailwind CSS: v3.4.19
 
 # 🚀 On-boarding
 
