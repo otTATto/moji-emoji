@@ -3,9 +3,7 @@ import logoIcon from "data-base64:~assets/logo.svg";
 import arrowDown from "data-base64:~assets/arrow-down.svg";
 import type { PlasmoGetStyle } from "plasmo"
 import { useState, useMemo, useEffect, useRef } from "react";
-
-// 座標
-type Pos = { x: number, y: number };
+import type { Pos, Emoji } from "./types";
 
 // 外部 CSS ファイルの内容に style.css の内容を動的に追加
 export const getStyle: PlasmoGetStyle = () => {
@@ -36,10 +34,11 @@ const OverlayArea = () => {
   const [open, setOpen] = useState(false);                  // OverlayArea を表示するかどうか
   const [pos, setPos] = useState<Pos | null>(null);         // OverlayArea の表示座標
   const [text, setText] = useState("");
-  const [emojiList, setEmojiList] = useState<string[]>([])
+  const [emojiList, setEmojiList] = useState<Emoji[]>([])
   const [loading, setLoading] = useState(false);            // 絵文字の suggestion 中かどうか
 
-  const style = useMemo<React.CSSProperties>(() => {
+  // open フラグや pos の状態により動的に変わる OverlayArea の style 
+  const styleDynamic = useMemo<React.CSSProperties>(() => {
     if (!open || !pos) return {
       display: "none",
     };
@@ -48,7 +47,6 @@ const OverlayArea = () => {
       position: "absolute",
       left: pos.x,
       top: pos.y + 16, 
-      width: 400, 
     };
   }, [open, pos]);
 
@@ -59,7 +57,15 @@ const OverlayArea = () => {
     // TODO: 以下はデモ用の Mockup なので書き換える
     try {
       setEmojiList([
-        "🌸", "💡", "🎉",
+        {
+          body: "🌸", name: "さくら", description: "春らしいイメージから連想",
+        }, 
+        {
+          body: "💡", name: "電球", description: "",
+        }, 
+        {
+          body: "🎉", name: "クラッカークラッカークラッカークラッカークラッカークラッカークラッカークラッカークラッカークラッカー", description: "とてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつき",
+        }, 
       ]);
     } finally {
       setLoading(false);
@@ -117,32 +123,46 @@ const OverlayArea = () => {
   return (
     <div 
       ref={rootRef}
-      style={style}
+      style={{
+        ...styleDynamic,
+        width: 400, 
+      }}
     >
-      <div className="
-        px-5 py-3
-        bg-sky-50
-        flex flex-col gap-y-3
-      ">
+      <div 
+        style={{
+          backgroundColor: "var(--background)", 
+          display: "flex",
+          flexDirection: "column",
+          rowGap: 12, 
+          padding: 20,
+        }}
+      >
+        {/* MojiEmoji ロゴマーク */}
         <img 
           src={logoIcon}
           width={150}
           style={{
             marginLeft: "100px",
+            paddingTop: 8,
+            paddingBottom: 8,
           }}
-          className="py-2"
         />
-        <div className="
-            bg-white 
-            p-3 
-            rounded-2xl
-        ">
+        {/* 
+          選択文字列
+          NOTE: 2 行でトランケート
+        */}
+        <div 
+          style={{
+            backgroundColor: "var(--pond)", 
+            padding: 12,           
+            borderRadius: 16, 
+          }}
+        >
           <div 
-            className="
-              text-gray-700
-              text-base
-            "
             style={{
+              color: "var(--main)",
+              fontSize: 16,
+
               overflow: "hidden",
               display: "-webkit-box",
               WebkitBoxOrient: "vertical",
@@ -152,6 +172,7 @@ const OverlayArea = () => {
             {text}
           </div>
         </div>
+        {/* ↓ */}
         <img 
           src={arrowDown}
           width={20}
@@ -160,10 +181,98 @@ const OverlayArea = () => {
             marginRight: "auto",
           }}
         />
-        <div>
+        {/* 提案絵文字リスト */}
+        <div 
+          style={{
+            backgroundColor: "var(--pond)",
+            borderRadius: 24,
+            overflow: "hidden",
+          }}
+        >
           {loading ? null : emojiList.map((emoji) => (
-            <div key={emoji}>{emoji}</div>
+            <button 
+              onClick={() => {
+                // クリップボードに絵文字をコピー
+                navigator.clipboard.writeText(emoji.body);
+                // OverlayArea を閉じる
+                setOpen(false);
+              }}
+              key={emoji.body}
+              style={{
+                width: "100%",
+                height: 80,
+                padding: 12, 
+
+                display: "flex",
+                alignItems: "center",
+                columnGap: 10,
+
+                borderBottom: "2px solid var(--background)",
+
+                transitionProperty: "all",
+                transitionDuration: "300",
+                transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "var(--pond-sub)"
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "var(--pond)"
+              }}
+            >
+              <div 
+                style={{
+                  textAlign: "center",
+                  fontSize: 36,
+                }}
+              >
+                {emoji.body}
+              </div>
+              <div 
+                style={{
+                  textAlign: "left",
+                  minWidth: 0,
+                  flex: 1,
+                }}
+              >
+                <div 
+                  style={{
+                    color: "var(--main)", 
+                    fontSize: 20, 
+                    fontWeight: 700, 
+
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {emoji.name}
+                </div>
+                <div 
+                  style={{
+                    color: "var(--sub)",    
+                    fontSize: 14, 
+                    
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {emoji.description}
+                </div>
+              </div>
+            </button>
           ))}
+        </div>
+        <div
+          style={{
+            padding: "12 0",
+            color: "var(--sub)",
+            fontSize: 12,
+            textAlign: "center",
+          }}
+        >
+          クリックすることで絵文字をクリップボードにコピーします
         </div>
       </div>
     </div>

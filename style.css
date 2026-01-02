@@ -7,3 +7,14 @@
     @apply font-sans;
   }
 }
+
+:host, :root {
+  --main: #374151;        /* gray-700 */
+  --sub: #6b7280;         /* gray-500 */
+
+  --accent: #0369a1;      /* sky-700 */
+  --background: #f0f9ff;  /* sky-50 */
+
+  --pond: #ffffff;        /* white */
+  --pond-sub: #F9FAFB;    /* gray-50 */
+}
