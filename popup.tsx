@@ -22,21 +22,73 @@ const IndexPopup = () => {
             bg-white
             rounded-2xl
             text-sm
+            flex flex-col gap-y-3
           "
         >
           <p>
-            選択した文字列から連想される絵文字を提案する拡張機能です。
+            選択した文字列から
+            <span 
+              className="
+                px-1 py-[2px] mx-[2px]
+                rounded
+                bg-sky-500
+              "
+            >
+              <span className="text-white">
+                連想される絵文字を提案する
+              </span>
+            </span>
+            拡張機能です。
           </p>
-          <h3>
-            使い方
+          <hr className="border-b-1 border-sky-50"></hr>
+          <h3 
+            className="
+              text-xl text-sky-500 font-bold
+            "
+          >
+            使い方 🔧
           </h3>
-          <div>
-            <ol>
+          <div className="pl-5">
+            <ol 
+              className="
+                list-decimal marker:text-sky-500
+                flex flex-col gap-y-1
+              "
+            >
               <li>
                 Web ページ上で文字列を選択します
               </li>
               <li>
-                Ctrl + Shift + E を押下します
+                <span className="
+                  px-1 py-[2px] mr-[2px]
+                  rounded
+                  bg-gray-100 
+                  text-xs
+                "
+                >
+                  Ctrl または ⌘
+                </span> 
+                + 
+                <span className="
+                  px-1 py-[2px] mx-[2px]
+                  rounded
+                  bg-gray-100 
+                  text-xs
+                "
+                >
+                  Shift
+                </span>
+                + 
+                <span className="
+                  px-1 py-[2px] mx-[2px]
+                  rounded
+                  bg-gray-100 
+                  text-xs
+                "
+                >
+                  E
+                </span>
+                を押下します
               </li>
               <li>
                 選択文字列の近くにポップアップが表示されます

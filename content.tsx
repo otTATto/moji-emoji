@@ -119,8 +119,11 @@ const OverlayArea = () => {
   useEffect(() => {
     // キー押下時に OverlayArea を表示させて suggest を走らせる
     const onKeyDown = (e: KeyboardEvent) => {
-      // TODO: 仮に Ctrl + Shift + E にしているが、将来的に設定で好きに変更できるようにする
-      const isHit = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "e";
+      // TODO: 仮に (Ctrl または ⌘) + Shift + E にしているが、将来的に設定で好きに変更できるようにする
+      const isHit =
+        (e.ctrlKey || e.metaKey) &&
+        e.shiftKey &&
+        e.key.toLowerCase() === "e";
       if (!isHit) return;
 
       const selectedText = getSelectedText();
@@ -289,7 +292,7 @@ const OverlayArea = () => {
         </div>
         <div
           className="
-            py-3
+            pb-3
             text-xs text-gray-500 text-center
           "
         >
