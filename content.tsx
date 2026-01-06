@@ -188,7 +188,7 @@ const OverlayArea = () => {
           width={150}
           className="
             ml-[100px] 
-            py-2
+            pb-2
           "
         />
         {/* 
@@ -292,7 +292,6 @@ const OverlayArea = () => {
         </div>
         <div
           className="
-            pb-3
             text-xs text-gray-500 text-center
           "
         >
