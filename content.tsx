@@ -3,7 +3,8 @@ import logoIcon from "data-base64:~assets/logo.svg";
 import arrowDown from "data-base64:~assets/arrow-down.svg";
 import type { PlasmoGetStyle } from "plasmo"
 import { useState, useMemo, useEffect, useRef } from "react";
-import type { Pos, Emoji } from "./types";
+import type { Pos, Emoji, EmojiSuggestReq, EmojiSuggestRes } from "~types";
+import { sendToBackground } from "@plasmohq/messaging";
 
 // 外部 CSS ファイルの内容に style.css の内容を動的に追加
 export const getStyle: PlasmoGetStyle = () => {
@@ -54,19 +55,13 @@ const OverlayArea = () => {
     setLoading(true);
     setEmojiList([]);
 
-    // TODO: 以下はデモ用の Mockup なので書き換える
     try {
-      setEmojiList([
-        {
-          body: "🌸", name: "さくら", description: "春らしいイメージから連想",
-        }, 
-        {
-          body: "💡", name: "電球", description: "",
-        }, 
-        {
-          body: "🎉", name: "クラッカークラッカークラッカークラッカークラッカークラッカークラッカークラッカークラッカークラッカー", description: "とてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつきとてもいい思いつき",
-        }, 
-      ]);
+      const res = await sendToBackground<EmojiSuggestReq, EmojiSuggestRes>({
+        name: "emoji-suggest",
+        body: { text: inputText },
+      });
+
+      setEmojiList(res.emojiList ?? []);
     } finally {
       setLoading(false);
     }
@@ -189,7 +184,17 @@ const OverlayArea = () => {
             overflow: "hidden",
           }}
         >
-          {loading ? null : emojiList.map((emoji) => (
+          {loading ? (
+            <div
+              style={{
+                width: "100%",
+                height: 240,
+                alignContent: "center",
+              }}
+            >
+              思考中…
+            </div>
+          ) : emojiList.map((emoji) => (
             <button 
               onClick={() => {
                 // クリップボードに絵文字をコピー
