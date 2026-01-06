@@ -30,6 +30,54 @@ const getSelectionPos = (): Pos | null => {
   };
 }; 
 
+// Loading 中のスケルトンスクリーンのためのコンポーネント
+const SkeletonEmojiItem = () => (
+  <div
+    style={{
+      width: "100%",
+      height: 80,
+      padding: 12,
+      display: "flex",
+      alignItems: "center",
+      columnGap: 10,
+      borderBottom: "2px solid var(--background)",
+    }}
+  >
+    {/* 絵文字部分 */}
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        borderRadius: 8,
+        backgroundColor: "var(--background)",
+        animation: "skeleton 1.2s ease-in-out infinite",
+      }}
+    />
+    {/* テキスト部分 */}
+    <div style={{ flex: 1 }}>
+      <div
+        style={{
+          height: 20,
+          width: "40%",
+          borderRadius: 8,
+          backgroundColor: "var(--background)",
+          marginBottom: 8,
+          animation: "skeleton 1.2s ease-in-out infinite",
+        }}
+      />
+      <div
+        style={{
+          height: 14,
+          width: "70%",
+          borderRadius: 8,
+          backgroundColor: "var(--background)",
+          animation: "skeleton 1.2s ease-in-out infinite",
+        }}
+      />
+    </div>
+  </div>
+)
+
 const OverlayArea = () => {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const [open, setOpen] = useState(false);                  // OverlayArea を表示するかどうか
@@ -185,14 +233,10 @@ const OverlayArea = () => {
           }}
         >
           {loading ? (
-            <div
-              style={{
-                width: "100%",
-                height: 240,
-                alignContent: "center",
-              }}
-            >
-              思考中…
+            <div>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <SkeletonEmojiItem key={i} />
+              ))}
             </div>
           ) : emojiList.map((emoji) => (
             <button 
