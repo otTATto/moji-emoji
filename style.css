@@ -19,8 +19,19 @@
   --pond-sub: #F9FAFB;    /* gray-50 */
 }
 
+/* スケルトンスクリーンのアニメーション */
 @keyframes skeleton {
   0% { opacity: 0.6; }
   50% { opacity: 1; }
   100% { opacity: 0.6; }
+}
+
+/* テキストのホバーアニメーション */
+.text-hover:hover {
+  color: var(--accent);
+}
+
+/* SVG のホバーアニメーション */
+.svg-hover:hover {
+  fill: var(--accent);
 }

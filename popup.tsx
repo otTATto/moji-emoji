@@ -5,34 +5,77 @@ import githubIcon from "data-base64:~assets/github-mark.svg";
 const IndexPopup = () => {
   return (
     <>
-      <div className="
-        w-[300px] 
-        bg-sky-50 px-5 py-3
-        flex flex-col gap-y-3
-      ">
+      <div 
+        style={{
+          width: 300,
+          padding: "12px 20px",
+          backgroundColor: "var(--background)",
+
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+        }}
+      >
         <img 
           src={logoIcon}
-          className="w-[200px] py-2 ml-6"
+          style={{
+            width: 200,
+            padding: "8px 0",
+            marginLeft: 24,
+          }}
         />
-        <div className="
-          text-gray-700
-          text-sm
-          bg-white 
-          p-3 rounded-2xl
-        ">
-          選択した文字列から連想される絵文字を提案する拡張機能です。
+        <div 
+          style={{
+            padding: 12,
+            borderRadius: 16,
+            backgroundColor: "var(--pond)",
+
+            color: "var(--main)",
+            fontSize: 14,
+          }}
+        >
+          <p>
+            選択した文字列から連想される絵文字を提案する拡張機能です。
+          </p>
+          <h3>
+            使い方
+          </h3>
+          <div>
+            <ol>
+              <li>
+                Web ページ上で文字列を選択します
+              </li>
+              <li>
+                Ctrl + Shift + E を押下します
+              </li>
+              <li>
+                選択文字列の近くにポップアップが表示されます
+              </li>
+            </ol>
+          </div>
         </div>
-        <div className="
-          flex items-center justify-center gap-x-1
-          text-gray-500 text-xs font-bold 
-        ">
+        <div 
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 4,
+
+            color: "var(--sub)",
+            fontSize: 12,
+            fontWeight: 700,
+          }}
+        >
           <div>
             © <a
             href="https://x.com/0123tato"
             target="_blank"
+            style={{
+              textDecoration: "none",
+              transition: "color 300ms ease-in-out",
+            }}
             className="
-              hover:text-sky-500 
-              duration-300 ease-in-out
+              text-hover
             ">
               たと
             </a>
@@ -45,10 +88,14 @@ const IndexPopup = () => {
             >
               <img
                 src={githubIcon}
+                style={{
+                  width: 16,
+                  fill: "var(--main)",
+                  transition: "fill 300ms ease-in-out",
+                }}
                 className="
-                  w-4 
-                  fill-gray-500 hover:fill-sky-500 
-                  duration-300 ease-in-out"
+                  svg-hover
+                "
               />
             </a>
           </div>
