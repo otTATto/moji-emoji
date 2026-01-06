@@ -7,6 +7,8 @@
 
 MojiEmoji は、選択した文字列から連想される絵文字を提案する Chrome 拡張機能です。
 
+https://github.com/user-attachments/assets/e41aa33f-7fab-4a1e-8f29-5d91dba8dcf4
+
 ※ LLM に推論させる処理は [**MojiEmoji API** - GitHub](https://github.com/otTATto/moji-emoji-api) に分離しています。
 
 ## 技術スタック
