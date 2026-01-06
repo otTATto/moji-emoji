@@ -6,33 +6,23 @@ const IndexPopup = () => {
   return (
     <>
       <div 
-        style={{
-          width: 300,
-          padding: "12px 20px",
-          backgroundColor: "var(--background)",
-
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
-        }}
+        className="
+          w-[300px] 
+          bg-sky-50 px-5 py-3
+          flex flex-col gap-y-3
+        "
       >
         <img 
           src={logoIcon}
-          style={{
-            width: 200,
-            padding: "8px 0",
-            marginLeft: 24,
-          }}
+          className="w-[200px] py-2 ml-6"
         />
         <div 
-          style={{
-            padding: 12,
-            borderRadius: 16,
-            backgroundColor: "var(--pond)",
-
-            color: "var(--main)",
-            fontSize: 14,
-          }}
+          className="
+            p-3
+            bg-white
+            rounded-2xl
+            text-sm
+          "
         >
           <p>
             選択した文字列から連想される絵文字を提案する拡張機能です。
@@ -55,27 +45,18 @@ const IndexPopup = () => {
           </div>
         </div>
         <div 
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 4,
-
-            color: "var(--sub)",
-            fontSize: 12,
-            fontWeight: 700,
-          }}
+          className="
+            flex items-center justify-center gap-x-1
+            text-gray-500 text-xs font-bold 
+          "
         >
           <div>
             © <a
             href="https://x.com/0123tato"
             target="_blank"
-            style={{
-              textDecoration: "none",
-              transition: "color 300ms ease-in-out",
-            }}
             className="
-              text-hover
+              hover:text-sky-500
+              duration-300 ease-in-out
             ">
               たと
             </a>
@@ -94,7 +75,9 @@ const IndexPopup = () => {
                   transition: "fill 300ms ease-in-out",
                 }}
                 className="
-                  svg-hover
+                  w-4
+                  fill-gray-500 hover:fill-sky-500
+                  duration-300 ease-in-out
                 "
               />
             </a>

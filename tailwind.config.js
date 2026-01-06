@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./popup.tsx",
-    "./build/chrome-mv3-dev/**/*.html"
+    "./**/*.{ts,tsx}",
+    "./build/**/*.html"
   ],
   theme: {
     extend: {

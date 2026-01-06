@@ -33,44 +33,45 @@ const getSelectionPos = (): Pos | null => {
 // Loading 中のスケルトンスクリーンのためのコンポーネント
 const SkeletonEmojiItem = () => (
   <div
-    style={{
-      width: "100%",
-      height: 80,
-      padding: 12,
-      display: "flex",
-      alignItems: "center",
-      columnGap: 10,
-      borderBottom: "2px solid var(--background)",
-    }}
+    className="
+      w-full h-20
+      p-3
+      flex items-center 
+      gap-x-[10px]
+      border-b-2 border-sky-50
+    "
   >
     {/* 絵文字部分 */}
     <div
+      className="
+        w-10 h-10
+        rounded-lg
+        bg-sky-50
+      "
       style={{
-        width: 40,
-        height: 40,
-        borderRadius: 8,
-        backgroundColor: "var(--background)",
         animation: "skeleton 1.2s ease-in-out infinite",
       }}
     />
     {/* テキスト部分 */}
-    <div style={{ flex: 1 }}>
+    <div className="flex-1">
       <div
+        className="
+          h-5 w-[40%]
+          mb-2
+          rounded-lg
+          bg-sky-50
+        "
         style={{
-          height: 20,
-          width: "40%",
-          borderRadius: 8,
-          backgroundColor: "var(--background)",
-          marginBottom: 8,
           animation: "skeleton 1.2s ease-in-out infinite",
         }}
       />
       <div
+        className="
+          h-[14px] w-[70%]
+          rounded-lg
+          bg-sky-50
+        "
         style={{
-          height: 14,
-          width: "70%",
-          borderRadius: 8,
-          backgroundColor: "var(--background)",
           animation: "skeleton 1.2s ease-in-out infinite",
         }}
       />
@@ -172,41 +173,38 @@ const OverlayArea = () => {
       }}
     >
       <div 
-        style={{
-          backgroundColor: "var(--background)", 
-          display: "flex",
-          flexDirection: "column",
-          rowGap: 12, 
-          padding: 20,
-        }}
+        className="
+          bg-sky-50
+          flex flex-col gap-y-3
+          p-5
+        "
       >
         {/* MojiEmoji ロゴマーク */}
         <img 
           src={logoIcon}
           width={150}
-          style={{
-            marginLeft: "100px",
-            paddingTop: 8,
-            paddingBottom: 8,
-          }}
+          className="
+            ml-[100px] 
+            py-2
+          "
         />
         {/* 
           選択文字列
           NOTE: 2 行でトランケート
         */}
         <div 
-          style={{
-            backgroundColor: "var(--pond)", 
-            padding: 12,           
-            borderRadius: 16, 
-          }}
+          className="
+            bg-white
+            p-3
+            rounded-2xl
+          "
         >
           <div 
+            className="
+              text-base
+              overflow-hidden
+            "
             style={{
-              color: "var(--main)",
-              fontSize: 16,
-
-              overflow: "hidden",
               display: "-webkit-box",
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: "2",
@@ -219,18 +217,15 @@ const OverlayArea = () => {
         <img 
           src={arrowDown}
           width={20}
-          style={{
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+          className="mx-auto"
         />
         {/* 提案絵文字リスト */}
         <div 
-          style={{
-            backgroundColor: "var(--pond)",
-            borderRadius: 24,
-            overflow: "hidden",
-          }}
+          className="
+            bg-white
+            rounded-3xl
+            overflow-hidden
+          "
         >
           {loading ? (
             <div>
@@ -247,65 +242,44 @@ const OverlayArea = () => {
                 setOpen(false);
               }}
               key={emoji.body}
-              style={{
-                width: "100%",
-                height: 80,
-                padding: 12, 
-
-                display: "flex",
-                alignItems: "center",
-                columnGap: 10,
-
-                borderBottom: "2px solid var(--background)",
-
-                transitionProperty: "all",
-                transitionDuration: "300",
-                transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--pond-sub)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--pond)"
-              }}
+              className="
+                w-full h-20
+                p-3
+                flex items-center 
+                gap-x-[10px]
+                border-b-2 border-sky-50
+                transition-all duration-300 ease-in-out
+                hover:bg-gray-50 hover:text-sky-500
+              "
             >
               <div 
-                style={{
-                  textAlign: "center",
-                  fontSize: 36,
-                }}
+                className="
+                  text-center
+                  text-[36px]
+                "
               >
                 {emoji.body}
               </div>
               <div 
-                style={{
-                  textAlign: "left",
-                  minWidth: 0,
-                  flex: 1,
-                }}
+                className="
+                  text-left
+                  min-w-0
+                  flex-1
+                "
               >
                 <div 
-                  style={{
-                    color: "var(--main)", 
-                    fontSize: 20, 
-                    fontWeight: 700, 
-
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                  }}
+                  className="
+                    text-xl font-bold
+                    truncate
+                  "
                 >
                   {emoji.name}
                 </div>
                 <div 
-                  style={{
-                    color: "var(--sub)",    
-                    fontSize: 14, 
-                    
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                  }}
+                  className="
+                    text-sm
+                    truncate
+                  "
                 >
                   {emoji.description}
                 </div>
@@ -314,12 +288,10 @@ const OverlayArea = () => {
           ))}
         </div>
         <div
-          style={{
-            padding: "12 0",
-            color: "var(--sub)",
-            fontSize: 12,
-            textAlign: "center",
-          }}
+          className="
+            py-3
+            text-xs text-gray-500 text-center
+          "
         >
           クリックすることで絵文字をクリップボードにコピーします
         </div>

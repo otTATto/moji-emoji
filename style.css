@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply font-sans;
+    @apply font-sans text-gray-700;
   }
 }
 
@@ -24,14 +24,4 @@
   0% { opacity: 0.6; }
   50% { opacity: 1; }
   100% { opacity: 0.6; }
-}
-
-/* テキストのホバーアニメーション */
-.text-hover:hover {
-  color: var(--accent);
-}
-
-/* SVG のホバーアニメーション */
-.svg-hover:hover {
-  fill: var(--accent);
 }
