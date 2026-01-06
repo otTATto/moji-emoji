@@ -89,11 +89,36 @@ const IndexPopup = () => {
                   E
                 </span>
                 を押下します
+                <span
+                  className="
+                    mx-1
+                    text-rose-500 font-bold
+                  "
+                >※</span>
               </li>
               <li>
                 選択文字列の近くにポップアップが表示されます
               </li>
             </ol>
+          </div>
+          <div
+            className="
+              p-2
+              rounded-xl
+              bg-rose-50
+              text-rose-900 text-xs
+            "
+          >
+            <span
+              className="
+                mr-1
+                text-rose-500 font-bold
+              "
+            >
+              ※
+            </span>
+            Web ページによっては、キーボード入力が無効化されている場合があります。
+            キーボード入力以外のご利用方法を、これから実装予定です。
           </div>
         </div>
         <div 
