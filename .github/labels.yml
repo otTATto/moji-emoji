@@ -1,0 +1,37 @@
+# isuue のための label を定義します
+- name: bug
+  color: d73a4a
+  description: 重大なバグ
+- name: chore
+  color: FEF2C0
+  description: 雑多な修正や更新
+- name: docs
+  color: 0075ca
+  description: ドキュメントの追加や修正、更新
+- name: enhance
+  color: 00FBFF
+  description: 特に重要な実装
+- name: icebox
+  color: C5DEF5
+  description: wip、いつか解決したいが今は手を出せない
+- name: question
+  color: D4C5F9
+  description: 疑問や問題提起
+- name: UI/UX
+  color: BFDADC
+  description: 見た目やユーザー体験の向上
+- name: wont
+  color: ffffff
+  description: 必須ではない、エキストラな修正
+- name: env:iPhone/iPad
+  color: 4B4B4B
+  description: iPhone/iPad 関連
+- name: env:Android
+  color: 4B4B4B
+  description: Android 関連
+- name: env:Mac
+  color: 4B4B4B
+  description: Mac 関連
+- name: env:Windows
+  color: 4B4B4B
+  description: Windows 関連
