@@ -1,4 +1,6 @@
 # isuue のための label を定義します
+
+## Base
 - name: bug
   color: d73a4a
   description: 重大なバグ
@@ -23,15 +25,42 @@
 - name: wont
   color: ffffff
   description: 必須ではない、エキストラな修正
-- name: env:iPhone/iPad
+
+## OS
+- name: os:Windows
   color: 4B4B4B
-  description: iPhone/iPad 関連
-- name: env:Android
+  description: MS Windows 関連
+- name: os:macOS
+  color: 4B4B4B
+  description: macOS 関連
+- name: os:Linux
+  color: 4B4B4B
+  description: Linux Distro 関連
+- name: os:Android
   color: 4B4B4B
   description: Android 関連
-- name: env:Mac
+- name: os:iOS/iPadOS
   color: 4B4B4B
-  description: Mac 関連
-- name: env:Windows
+  description: iOS/iPadOS 関連
+
+## Device
+- name: device:SP
   color: 4B4B4B
-  description: Windows 関連
+  description: Mobile 端末関連
+- name: device:PC
+  color: 4B4B4B
+  description: PC 関連
+
+## Browser
+- name: browser:Chrome
+  color: 4B4B4B
+  description: Google Chrome 関連
+- name: browser:Firefox
+  color: 4B4B4B
+  description: Firefox 関連
+- name: browser:Safari
+  color: 4B4B4B
+  description: Safari 関連
+- name: browser:Edge
+  color: 4B4B4B
+  description: Edge 関連
