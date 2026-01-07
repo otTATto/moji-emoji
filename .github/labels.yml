@@ -2,13 +2,13 @@
 
 ## Base
 - name: bug
-  color: d73a4a
+  color: D73A4A
   description: 重大なバグ
 - name: chore
   color: FEF2C0
   description: 雑多な修正や更新
 - name: docs
-  color: 0075ca
+  color: 0075CA
   description: ドキュメントの追加や修正、更新
 - name: enhance
   color: 00FBFF
@@ -17,13 +17,13 @@
   color: C5DEF5
   description: wip、いつか解決したいが今は手を出せない
 - name: question
-  color: D4C5F9
+  color: 5319E7
   description: 疑問や問題提起
 - name: UI/UX
   color: BFDADC
   description: 見た目やユーザー体験の向上
 - name: wont
-  color: ffffff
+  color: FFFFFF
   description: 必須ではない、エキストラな修正
 
 ## OS
@@ -45,22 +45,22 @@
 
 ## Device
 - name: device:SP
-  color: 4B4B4B
+  color: D6D6D6
   description: Mobile 端末関連
 - name: device:PC
-  color: 4B4B4B
+  color: D6D6D6
   description: PC 関連
 
 ## Browser
 - name: browser:Chrome
-  color: 4B4B4B
+  color: D4C5F9
   description: Google Chrome 関連
 - name: browser:Firefox
-  color: 4B4B4B
+  color: D4C5F9
   description: Firefox 関連
 - name: browser:Safari
-  color: 4B4B4B
+  color: D4C5F9
   description: Safari 関連
 - name: browser:Edge
-  color: 4B4B4B
+  color: D4C5F9
   description: Edge 関連
