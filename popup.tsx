@@ -7,14 +7,17 @@ const IndexPopup = () => {
     <>
       <div 
         className="
-          w-[300px] 
+          w-[400px] 
           bg-sky-50 px-5 py-3
           flex flex-col gap-y-3
         "
       >
         <img 
           src={logoIcon}
-          className="w-[200px] py-2 ml-6"
+          className="
+            w-[200px] py-2 
+            ml-[75px]
+          "
         />
         <div 
           className="
