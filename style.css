@@ -8,6 +8,10 @@
   }
 }
 
+@theme {
+  --spacing: 4px;
+}
+
 :host, :root {
   --main: #374151;        /* gray-700 */
   --sub: #6b7280;         /* gray-500 */
@@ -17,6 +21,8 @@
 
   --pond: #ffffff;        /* white */
   --pond-sub: #F9FAFB;    /* gray-50 */
+
+  --spacing: 4px;
 }
 
 /* スケルトンスクリーンのアニメーション */
