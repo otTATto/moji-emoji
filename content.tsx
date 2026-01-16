@@ -173,6 +173,7 @@ const OverlayArea = () => {
       style={{
         ...styleDynamic,
         width: 400, 
+        zIndex: 2147483647, 
       }}
     >
       <div 
