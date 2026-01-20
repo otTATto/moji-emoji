@@ -1,6 +1,7 @@
 import styleLocal from "data-text:./style.css"
 import logoIcon from "data-base64:~assets/logo.svg";
 import arrowDown from "data-base64:~assets/arrow-down.svg";
+import { RotateCw } from 'lucide-react';
 import type { PlasmoGetStyle } from "plasmo"
 import { useState, useMemo, useEffect, useRef } from "react";
 import type { Pos, Emoji, EmojiSuggestReq, EmojiSuggestRes } from "~types";
@@ -85,7 +86,7 @@ const OverlayArea = () => {
   const [pos, setPos] = useState<Pos | null>(null);         // OverlayArea の表示座標
   const [text, setText] = useState("");
   const [emojiList, setEmojiList] = useState<Emoji[]>([])
-  const [loading, setLoading] = useState(false);            // 絵文字の suggestion 中かどうか
+  const [isLoading, setIsLoading] = useState(false);            // 絵文字の suggestion 中かどうか
 
   // open フラグや pos の状態により動的に変わる OverlayArea の style 
   const styleDynamic = useMemo<React.CSSProperties>(() => {
@@ -101,7 +102,7 @@ const OverlayArea = () => {
   }, [open, pos]);
 
   const runSuggest = async (inputText: string) => {
-    setLoading(true);
+    setIsLoading(true);
     setEmojiList([]);
 
     try {
@@ -112,7 +113,7 @@ const OverlayArea = () => {
 
       setEmojiList(res.emojiList ?? []);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -193,18 +194,24 @@ const OverlayArea = () => {
           "
         />
         {/* 
-          選択文字列
-          NOTE: 2 行でトランケート
+          テキストボックス
         */}
         <div 
           className="
             bg-white
-            p-3
-            rounded-2xl
+            p-2
+            rounded-3xl
+            flex flex-col
+            gap-y-3
           "
         >
+          {/* 
+            選択文字列
+            NOTE: 2 行でトランケート
+          */}
           <div 
             className="
+              px-2 pt-1
               text-base
               overflow-hidden
             "
@@ -215,6 +222,42 @@ const OverlayArea = () => {
             }} 
           >
             {text}
+          </div>
+          <div
+            className="
+              flex 
+              justify-end
+            "
+          >
+            <button
+              onClick={() => {runSuggest(text)}}
+              className={`
+                px-4 py-2
+                rounded-full
+                duration-300 ease-in-out
+                text-center font-bold
+                flex flex-row 
+                justify-center items-center
+                gap-x-1 
+                ${isLoading 
+                  ? `
+                      disabled 
+                      bg-gray-200 text-white
+                      cursor-not-allowed
+                    ` 
+                  : `
+                      bg-sky-50 hover:bg-sky-100
+                      text-sky-500
+                      cursor-pointer
+                    `
+                }
+              `}
+            >
+              <RotateCw 
+                size={16}
+              />
+              再生成する
+            </button>
           </div>
         </div>
         {/* ↓ */}
@@ -231,7 +274,7 @@ const OverlayArea = () => {
             overflow-hidden
           "
         >
-          {loading ? (
+          {isLoading ? (
             <div>
               {Array.from({ length: 3 }).map((_, i) => (
                 <SkeletonEmojiItem key={i} />
