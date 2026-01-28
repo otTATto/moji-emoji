@@ -39,7 +39,6 @@ const SkeletonEmojiItem = () => (
       p-3
       flex items-center 
       gap-x-[10px]
-      border-b-2 border-sky-50
     "
   >
     {/* 絵文字部分 */}
@@ -86,7 +85,7 @@ const OverlayArea = () => {
   const [pos, setPos] = useState<Pos | null>(null);         // OverlayArea の表示座標
   const [text, setText] = useState("");
   const [emojiList, setEmojiList] = useState<Emoji[]>([])
-  const [isLoading, setIsLoading] = useState(false);            // 絵文字の suggestion 中かどうか
+  const [isLoading, setIsLoading] = useState(false);        // 絵文字の suggestion 中かどうか
 
   // open フラグや pos の状態により動的に変わる OverlayArea の style 
   const styleDynamic = useMemo<React.CSSProperties>(() => {
@@ -192,6 +191,8 @@ const OverlayArea = () => {
             ml-[100px] 
             pb-2
           "
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
         />
         {/* 
           テキストボックス
@@ -211,7 +212,7 @@ const OverlayArea = () => {
           */}
           <div 
             className="
-              px-2 pt-1
+              px-3 pt-2
               text-base
               overflow-hidden
             "
@@ -236,6 +237,8 @@ const OverlayArea = () => {
                 rounded-full
                 duration-300 ease-in-out
                 text-center font-bold
+                focus:outline-2 outline-white
+                focus:outline-offset-2 
                 flex flex-row 
                 justify-center items-center
                 gap-x-1 
@@ -243,11 +246,13 @@ const OverlayArea = () => {
                   ? `
                       disabled 
                       bg-gray-200 text-white
+                      focus:outline-gray-200
                       cursor-not-allowed
                     ` 
                   : `
                       bg-sky-50 hover:bg-sky-100
-                      text-sky-500
+                      text-sky-500 hover:text-sky-600
+                      focus:outline-sky-500
                       cursor-pointer
                     `
                 }
@@ -256,7 +261,9 @@ const OverlayArea = () => {
               <RotateCw 
                 size={16}
               />
-              再生成する
+              <div className="translate-y-[-1px]">
+                再生成する
+              </div>
             </button>
           </div>
         </div>
@@ -265,10 +272,13 @@ const OverlayArea = () => {
           src={arrowDown}
           width={20}
           className="mx-auto"
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
         />
         {/* 提案絵文字リスト */}
         <div 
           className="
+            p-2
             bg-white
             rounded-3xl
             overflow-hidden
@@ -292,11 +302,14 @@ const OverlayArea = () => {
               className="
                 w-full h-20
                 p-3
+                rounded-3xl
+                focus:outline-2 outline-white
+                focus:outline-offset-2 
                 flex items-center 
                 gap-x-[10px]
-                border-b-2 border-sky-50
                 transition-all duration-300 ease-in-out
-                hover:bg-gray-50 hover:text-sky-500
+                hover:bg-sky-50 hover:text-sky-700
+                focus:outline-sky-500 
               "
             >
               <div 
