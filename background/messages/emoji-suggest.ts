@@ -4,9 +4,15 @@ import type { EmojiSuggestReq, EmojiSuggestRes } from "~types";
 const handler: PlasmoMessaging.MessageHandler<
   EmojiSuggestReq,
   EmojiSuggestRes
-> = async (req, res) => {
-  // LLM に投げる入力文を 300 文字に制限
+> = async (req, res) => { 
+  /**
+   * API リクエストを整形
+   * 
+   * - text   : LLM に絵文字に変換してもらう文章（必須）を 300 文字に制限
+   * - nuances: 変換してもらいたい絵文字ニュアンスが存在し配列かどうか確認
+   */
   const text = String(req.body.text ?? "").trim().slice(0, 300);
+  const nuances = Array.isArray(req.body?.nuances) ? req.body.nuances : undefined;
 
   if (!text) {
     res.send({ emojiList: [] });
@@ -23,6 +29,7 @@ const handler: PlasmoMessaging.MessageHandler<
         },
         body: JSON.stringify({
           text: text,
+          nuances: nuances, 
         })
       },
     );
