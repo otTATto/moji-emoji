@@ -243,7 +243,7 @@ const OverlayArea = () => {
                 onClick={() => setIsNuanceOpen(v => !v)}
                 aria-expanded={isNuanceOpen}
                 className={`
-                  w-[42px] h-[40px] py-2
+                  px-4 h-[40px] py-2
                   rounded-full
                   duration-300 ease-in-out
                   text-center font-bold
@@ -276,6 +276,9 @@ const OverlayArea = () => {
                     }  
                   `}
                 />
+                <div className="translate-y-[-1px]">
+                  調整
+                </div>
               </button>
               {/* 選択中のニュアンスがあれば付くバッジ */}
               <span
