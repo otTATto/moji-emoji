@@ -2,7 +2,9 @@
 export default {
   content: [
     "./**/*.{ts,tsx}",
-    "./build/**/*.html"
+    "./build/**/*.html",
+    "!./node_modules/**",
+    "!./.plasmo/**",
   ],
   theme: {
     extend: {

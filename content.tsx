@@ -1,9 +1,11 @@
 import styleLocal from "data-text:./style.css"
 import logoIcon from "data-base64:~assets/logo.svg";
 import arrowDown from "data-base64:~assets/arrow-down.svg";
+import { Plus, RotateCw, Check } from 'lucide-react';
 import type { PlasmoGetStyle } from "plasmo"
 import { useState, useMemo, useEffect, useRef } from "react";
-import type { Pos, Emoji, EmojiSuggestReq, EmojiSuggestRes } from "~types";
+import type { Pos, Nuance, Emoji, EmojiSuggestReq, EmojiSuggestRes } from "~types";
+import { NUANCES } from "~types"; 
 import { sendToBackground } from "@plasmohq/messaging";
 
 // 外部 CSS ファイルの内容に style.css の内容を動的に追加
@@ -38,7 +40,6 @@ const SkeletonEmojiItem = () => (
       p-3
       flex items-center 
       gap-x-[10px]
-      border-b-2 border-sky-50
     "
   >
     {/* 絵文字部分 */}
@@ -85,7 +86,9 @@ const OverlayArea = () => {
   const [pos, setPos] = useState<Pos | null>(null);         // OverlayArea の表示座標
   const [text, setText] = useState("");
   const [emojiList, setEmojiList] = useState<Emoji[]>([])
-  const [loading, setLoading] = useState(false);            // 絵文字の suggestion 中かどうか
+  const [isLoading, setIsLoading] = useState(false);        // 絵文字の suggestion 中かどうか
+  const [isNuanceOpen, setIsNuanceOpen] = useState(false); 
+  const [selectedNuances, setSelectedNuances] = useState<Set<Nuance>>(new Set());
 
   // open フラグや pos の状態により動的に変わる OverlayArea の style 
   const styleDynamic = useMemo<React.CSSProperties>(() => {
@@ -100,19 +103,24 @@ const OverlayArea = () => {
     };
   }, [open, pos]);
 
-  const runSuggest = async (inputText: string) => {
-    setLoading(true);
+  const runSuggest = async (inputText: string, inputNuances?: Set<Nuance>) => {
+    setIsLoading(true);
     setEmojiList([]);
 
     try {
+      const nuances =
+        inputNuances && inputNuances.size > 0
+          ? Array.from(inputNuances)
+          : undefined;
+
       const res = await sendToBackground<EmojiSuggestReq, EmojiSuggestRes>({
         name: "emoji-suggest",
-        body: { text: inputText },
+        body: { text: inputText, nuances },
       });
 
       setEmojiList(res.emojiList ?? []);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -191,20 +199,28 @@ const OverlayArea = () => {
             ml-[100px] 
             pb-2
           "
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
         />
         {/* 
-          選択文字列
-          NOTE: 2 行でトランケート
+          テキストボックス
         */}
         <div 
           className="
             bg-white
-            p-3
-            rounded-2xl
+            p-2
+            rounded-3xl
+            flex flex-col
+            gap-y-3
           "
         >
+          {/* 
+            選択文字列
+            NOTE: 2 行でトランケート
+          */}
           <div 
             className="
+              px-3 pt-2
               text-base
               overflow-hidden
             "
@@ -216,22 +232,198 @@ const OverlayArea = () => {
           >
             {text}
           </div>
+          <div
+            className="
+              flex gap-x-2
+              justify-end
+            "
+          >
+            <div className="relative">
+              <button
+                onClick={() => setIsNuanceOpen(v => !v)}
+                aria-expanded={isNuanceOpen}
+                className={`
+                  px-4 h-[40px] py-2
+                  rounded-full
+                  duration-300 ease-in-out
+                  text-center font-bold
+                  focus:outline-2 outline-white
+                  focus:outline-offset-2 
+                  flex flex-row 
+                  justify-center items-center
+                  gap-x-1 
+                  ${isNuanceOpen
+                    ? `
+                        text-white hover:text-white
+                        bg-sky-500 hover:bg-sky-400 
+                      `
+                    : `
+                        bg-sky-50 hover:bg-sky-100
+                        text-sky-500 hover:text-sky-600
+                        focus:outline-sky-500
+                        cursor-pointer
+                      `
+                  }
+                `}
+              >
+                <Plus
+                  size={16}
+                  className={`
+                    duration-300 ease-in-out
+                    ${isNuanceOpen
+                      ? 'rotate-45'
+                      : ''
+                    }  
+                  `}
+                />
+                <div className="translate-y-[-1px]">
+                  調整
+                </div>
+              </button>
+              {/* 選択中のニュアンスがあれば付くバッジ */}
+              <span
+                className={`
+                  absolute 
+                  top-0 right-0 translate-x-1/4 -translate-y-1/4
+                  duration-300 ease-in-out
+                  w-[10px] h-[10px] rounded-full
+                  ${selectedNuances.size > 0
+                    ? 'bg-sky-500 ring-4 ring-white'
+                    : ''
+                  }
+                `}
+              />
+            </div>
+            <button
+              onClick={() => {runSuggest(text, selectedNuances)}}
+              className={`
+                px-4 py-2
+                rounded-full
+                duration-300 ease-in-out
+                text-center font-bold
+                focus:outline-2 outline-white
+                focus:outline-offset-2 
+                flex flex-row 
+                justify-center items-center
+                gap-x-1 
+                ${isLoading 
+                  ? `
+                      disabled 
+                      bg-gray-200 text-white
+                      focus:outline-gray-200
+                      cursor-not-allowed
+                    ` 
+                  : `
+                      bg-sky-50 hover:bg-sky-100
+                      text-sky-500 hover:text-sky-600
+                      focus:outline-sky-500
+                      cursor-pointer
+                    `
+                }
+              `}
+            >
+              <RotateCw 
+                size={16}
+              />
+              <div className="translate-y-[-1px]">
+                再生成する
+              </div>
+            </button>
+          </div>
+          <div
+            className={`
+              overflow-hidden
+              transition-all duration-300 ease-in-out
+              ${
+                isNuanceOpen 
+                  ? 'max-h-[160px] opacity-100 mt-[-4px]' 
+                  : 'max-h-0 opacity-0 pointer-events-none mt-[-12px]'
+              }
+            `}
+          >
+            <div
+              className="
+                p-4
+                rounded-3xl
+                bg-sky-50
+                flex flex-wrap gap-2
+              "
+            >
+              {NUANCES.map((nuance) => (
+                <div className="relative">
+                  <button
+                    key={nuance}
+                    onClick={() => {
+                      if (isLoading) return;
+                      setSelectedNuances(prev => {
+                        const next = new Set(prev);
+                        if (next.has(nuance)) next.delete(nuance);
+                        else next.add(nuance);
+                        return next;
+                      });
+                    }}
+                    className={`
+                      px-4 py-2
+                      rounded-full
+                      duration-300 ease-in-out
+                      text-xs
+                      text-center font-bold
+                      bg-white
+                      border-2 
+                      focus:outline-2 outline-white
+                      focus:outline-offset-2 focus:outline-sky-500
+                      ${isLoading
+                        ? 'cursor-not-allowed'
+                        : 'hover:text-sky-500'
+                      }
+                      ${selectedNuances.has(nuance)
+                        ? 'text-sky-500 border-sky-500'
+                        : 'text-gray-600  border-white'
+                      }
+                    `}
+                  >
+                    {nuance}
+                  </button>
+                  <span
+                    className={`
+                      absolute 
+                      top-0 left-0 -translate-x-1/4 -translate-y-1/4
+                      duration-300 ease-in-out
+                      w-5 h-5 rounded-full
+                      flex items-center justify-center
+                      ${selectedNuances.has(nuance)
+                        ? 'bg-sky-500 text-white'
+                        : 'text-transparent'
+                      }
+                    `}
+                  >
+                    <Check
+                      size={12}
+                    />
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         {/* ↓ */}
         <img 
           src={arrowDown}
           width={20}
           className="mx-auto"
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
         />
         {/* 提案絵文字リスト */}
         <div 
           className="
+            p-2
             bg-white
             rounded-3xl
             overflow-hidden
           "
         >
-          {loading ? (
+          {isLoading ? (
             <div>
               {Array.from({ length: 3 }).map((_, i) => (
                 <SkeletonEmojiItem key={i} />
@@ -249,11 +441,14 @@ const OverlayArea = () => {
               className="
                 w-full h-20
                 p-3
+                rounded-3xl
+                focus:outline-2 outline-white
+                focus:outline-offset-2 
                 flex items-center 
                 gap-x-[10px]
-                border-b-2 border-sky-50
                 transition-all duration-300 ease-in-out
-                hover:bg-gray-50 hover:text-sky-500
+                hover:bg-sky-50 hover:text-sky-700
+                focus:outline-sky-500 
               "
             >
               <div 
