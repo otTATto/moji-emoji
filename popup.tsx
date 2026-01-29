@@ -3,6 +3,12 @@ import logoIcon from "data-base64:~assets/logo.svg";
 import githubIcon from "data-base64:~assets/github-mark.svg";
 
 const IndexPopup = () => {
+  // manifest.version を runtime から取得
+  const version =
+    globalThis.chrome?.runtime?.getManifest?.().version ??
+    (globalThis as any)?.browser?.runtime?.getManifest?.().version ??
+    "dev";
+
   return (
     <>
       <div 
@@ -39,7 +45,7 @@ const IndexPopup = () => {
               duration-300 ease-in-out
             "
           >
-            v.1.0.1
+            {`v.${version}`}
           </a>
         </div>
         <div 
