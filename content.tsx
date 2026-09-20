@@ -33,32 +33,20 @@ const getSelectionPos = (): Pos | null => {
 }; 
 
 // Loading 中のスケルトンスクリーンのためのコンポーネント
-const SkeletonEmojiItem = () => (
-  <div
-    className="
-      w-full h-20
-      p-3
-      flex items-center 
-      gap-x-[10px]
-    "
-  >
-    {/* 絵文字部分 */}
+function SkeletonEmojiItem() {
+  return (
     <div
       className="
-        w-10 h-10
-        rounded-lg
-        bg-sky-50
+        w-full h-20
+        p-3
+        flex items-center
+        gap-x-[10px]
       "
-      style={{
-        animation: "skeleton 1.2s ease-in-out infinite",
-      }}
-    />
-    {/* テキスト部分 */}
-    <div className="flex-1">
+    >
+      {/* 絵文字部分 */}
       <div
         className="
-          h-5 w-[40%]
-          mb-2
+          w-10 h-10
           rounded-lg
           bg-sky-50
         "
@@ -66,21 +54,35 @@ const SkeletonEmojiItem = () => (
           animation: "skeleton 1.2s ease-in-out infinite",
         }}
       />
-      <div
-        className="
-          h-[14px] w-[70%]
-          rounded-lg
-          bg-sky-50
-        "
-        style={{
-          animation: "skeleton 1.2s ease-in-out infinite",
-        }}
-      />
+      {/* テキスト部分 */}
+      <div className="flex-1">
+        <div
+          className="
+            h-5 w-[40%]
+            mb-2
+            rounded-lg
+            bg-sky-50
+          "
+          style={{
+            animation: "skeleton 1.2s ease-in-out infinite",
+          }}
+        />
+        <div
+          className="
+            h-[14px] w-[70%]
+            rounded-lg
+            bg-sky-50
+          "
+          style={{
+            animation: "skeleton 1.2s ease-in-out infinite",
+          }}
+        />
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
-const OverlayArea = () => {
+export default function OverlayArea() {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const [open, setOpen] = useState(false);                  // OverlayArea を表示するかどうか
   const [pos, setPos] = useState<Pos | null>(null);         // OverlayArea の表示座標
@@ -194,6 +196,7 @@ const OverlayArea = () => {
         {/* MojiEmoji ロゴマーク */}
         <img 
           src={logoIcon}
+          alt="MojiEmoji"
           width={150}
           className="
             ml-[100px] 
@@ -350,9 +353,8 @@ const OverlayArea = () => {
               "
             >
               {NUANCES.map((nuance) => (
-                <div className="relative">
+                <div key={nuance} className="relative">
                   <button
-                    key={nuance}
                     onClick={() => {
                       if (isLoading) return;
                       setSelectedNuances(prev => {
@@ -409,6 +411,7 @@ const OverlayArea = () => {
         {/* ↓ */}
         <img 
           src={arrowDown}
+          alt="選択した文字列から、以下の絵文字が推測されました。"
           width={20}
           className="mx-auto"
           onContextMenu={(e) => e.preventDefault()}
@@ -496,6 +499,4 @@ const OverlayArea = () => {
       </div>
     </div>
   );
-};
-
-export default OverlayArea;
+}
