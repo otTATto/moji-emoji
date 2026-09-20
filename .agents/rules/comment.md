@@ -34,23 +34,19 @@
 ### 型定義
 
 ```typescript
-// src/types/user.ts
+// types.ts
 
 /**
- * 配送先住所
+ * 絵文字サジェスト結果
  *
- * - id           : 住所の一意識別子
- * - postalCode   : 郵便番号
- * - fullAddress  : 住所
- * - recipientName: 受取人名
- * - isDefault    : デフォルト住所かどうか
+ * - body       : 絵文字本体（例: "🌸"）
+ * - name       : 絵文字名
+ * - description: 選択文字列からこの絵文字を推薦した理由
  */
-export type Address = {
-  id: string;
-  postalCode: string;
-  fullAddress: string;
-  recipientName: string;
-  isDefault: boolean;
+export type Emoji = {
+  body: string;
+  name: string;
+  description: string;
 };
 ```
 
@@ -58,28 +54,29 @@ export type Address = {
 
 ```typescript
 /**
- * @function 健診項目キーと結果バリューを受け取り、日本語ラベルや単位を付け加えた形に整形して返す
+ * @function 選択文字列と任意のニュアンス指定から、絵文字サジェスト API のリクエスト本文を組み立てる
  *
- * @param items 健診項目のキーとその健診結果のバリュー
- * @returns 健診項目をキーとし、その健診結果・日本語ラベル・単位を持つ Record
+ * @param selectedText Web ページ上で選択された文字列
+ * @param selectedNuances ユーザーが追加で指定した絵文字のニュアンス
+ * @returns API に送信する text と nuances。選択文字列が空の場合は null
  *
  * NOTE:
- *   - fetch 失敗時は null を返す
- *   - 入力されたキーのうち CHECKUP_ITEM_KEYS に合致するもののみ返す
- *   - つまり、返り値のキーに引数のキーすべてが存在するとは限らない
+ *   - text は前後空白を除去し、API に渡せる長さに制限する
+ *   - nuances が空の場合、API 側の通常サジェストに委ねるため undefined にする
  *
  * e.g.
- *   - @param items { 'height': '165', 'weight': '45', 'VisualAcuityLeft': '1.2' }
+ *   - @param selectedText "春の予定"
+ *   - @param selectedNuances new Set(["ポジティブ", "顔"])
  *     ↓
  *     @returns {
- *       'height': { label: '身長', value: '165', unit: 'cm' },
- *       'weight': { label: '体重', value: '45', unit: 'kg' },
- *       'VisualAcuityLeft': { label: '視力（左）', value: '1.2' }
+ *       text: "春の予定",
+ *       nuances: ["ポジティブ", "顔"]
  *     }
  */
-export const formatCheckupItems = async (
-  items: Partial<Record<CheckupItemKey, string>>,
-): Promise<Partial<CheckupItems> | null> => {
+export const buildEmojiSuggestReq = (
+  selectedText: string,
+  selectedNuances: Set<Nuance>,
+): EmojiSuggestReq | null => {
   ...
 };
 ```
