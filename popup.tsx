@@ -2,11 +2,10 @@ import "./style.css";
 import logoIcon from "data-base64:~assets/logo.svg";
 import githubIcon from "data-base64:~assets/github-mark.svg";
 
-const IndexPopup = () => {
+export default function IndexPopup() {
   // manifest.version を runtime から取得
   const version =
     globalThis.chrome?.runtime?.getManifest?.().version ??
-    (globalThis as any)?.browser?.runtime?.getManifest?.().version ??
     "dev";
 
   return (
@@ -25,7 +24,7 @@ const IndexPopup = () => {
         >
           <img 
             src={logoIcon}
-            alt="Logo Image of MojiEmoji"
+            alt="MojiEmoji"
             onContextMenu={(e) => e.preventDefault()}
             onDragStart={(e) => e.preventDefault()}
             className="
@@ -192,6 +191,7 @@ const IndexPopup = () => {
             >
               <img
                 src={githubIcon}
+                alt=""
                 className="
                   w-4
                   fill-gray-500 hover:fill-sky-500
@@ -206,5 +206,3 @@ const IndexPopup = () => {
     </>
   );
 }
-
-export default IndexPopup;
